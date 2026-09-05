@@ -1,0 +1,109 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build static site
+        env:
+          PUBLIC_CONTACT_EMAIL: ${{ secrets.PUBLIC_CONTACT_EMAIL }}
+        run: |
+          rm -rf _site
+          mkdir -p _site
+
+          rsync -a \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='_site/' \
+            --exclude='README.md' \
+            ./ _site/
+
+          python3 <<'PY'
+          import json
+          import os
+          import secrets
+          from pathlib import Path
+
+          email = os.environ.get("PUBLIC_CONTACT_EMAIL", "").strip()
+
+          if not email:
+              raise SystemExit("PUBLIC_CONTACT_EMAIL is not available")
+
+          key = secrets.randbelow(254) + 1
+          encoded = [byte ^ key for byte in email.encode("utf-8")]
+
+          script = """(() => {
+            "use strict";
+
+            const key = __KEY__;
+            const encoded = __ENCODED__;
+
+            const bytes = new Uint8Array(
+              encoded.map(value => value ^ key)
+            );
+
+            const address = new TextDecoder().decode(bytes);
+
+            for (const element of document.querySelectorAll("[data-contact]")) {
+              element.addEventListener("click", () => {
+                const subject = "Message from " + location.hostname;
+                const body =
+                  "Page: " + document.title + "\\n" +
+                  "URL: " + location.href;
+
+                location.href =
+                  "mailto:" + address +
+                  "?subject=" + encodeURIComponent(subject) +
+                  "&body=" + encodeURIComponent(body);
+              });
+            }
+          })();"""
+
+          script = script.replace("__KEY__", str(key))
+          script = script.replace("__ENCODED__", json.dumps(encoded))
+
+          Path("_site/contact.js").write_text(script, encoding="utf-8")
+          PY
+
+          touch _site/.nojekyll
+
+          if [ ! -f "_site/index.html" ]; then
+            echo "index.html is missing"
+            exit 1
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
