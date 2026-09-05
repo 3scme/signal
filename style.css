@@ -1,3 +1,21 @@
+:root {
+  color-scheme: dark;
+
+  --body: #25271f;
+  --receiver: #a8aa91;
+  --receiver-dark: #8c8e78;
+
+  --screen: #151a12;
+  --screen-green: #b8d77d;
+  --screen-dim: #63734c;
+
+  --ink: #171914;
+  --light: #e3e2d4;
+
+  --line: #55594a;
+  --orange: #d27d2d;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -12,4 +30,468 @@ body {
 body {
   min-height: 100vh;
   min-height: 100dvh;
+
+  background: #25271f;
+  color: var(--light);
+
+  font-family:
+    Verdana,
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 18px;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+header {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+
+  padding:
+    max(22px, env(safe-area-inset-top))
+    18px
+    14px;
+}
+
+header h1 {
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: clamp(48px, 10vw, 94px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -4px;
+}
+
+header p {
+  margin: 7px 0 0;
+
+  color: #a8aa9d;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 16px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 20px;
+
+  width: min(1120px, 100%);
+  margin: 0 auto;
+
+  padding: 12px 18px 30px;
+}
+
+.receiver {
+  min-width: 0;
+
+  border: 3px solid #535646;
+
+  background: var(--receiver);
+  color: var(--ink);
+
+  box-shadow:
+    inset 0 0 0 1px #c9cab5,
+    4px 5px 0 #141610;
+}
+
+.receiver-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 10px 14px;
+
+  border-bottom: 2px solid #626553;
+
+  background: var(--receiver-dark);
+
+  font-family:
+    "Arial Narrow",
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.display {
+  margin: 25px 24px 20px;
+  padding: 20px;
+
+  border: 5px solid #4c4f41;
+
+  background: var(--screen);
+  color: var(--screen-green);
+
+  box-shadow:
+    inset 0 0 18px rgba(184, 215, 125, 0.08);
+}
+
+.frequency {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.frequency span {
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: clamp(50px, 11vw, 92px);
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: -5px;
+}
+
+.frequency small {
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 18px;
+}
+
+.signal-name {
+  min-height: 28px;
+
+  margin-top: 12px;
+
+  color: var(--screen-dim);
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 17px;
+}
+
+.meter {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 22px;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 13px;
+}
+
+.meter-track {
+  height: 13px;
+
+  border: 1px solid #647052;
+
+  background: #0d110b;
+}
+
+#meter-fill {
+  width: 4%;
+  height: 100%;
+
+  background: var(--screen-green);
+
+  transition: width 120ms linear;
+}
+
+.dial-area {
+  padding: 0 25px 22px;
+}
+
+#tuner {
+  width: 100%;
+  height: 36px;
+
+  accent-color: #393b32;
+
+  cursor: ew-resize;
+}
+
+.scale {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: -2px;
+
+  color: #44463b;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 12px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 22px;
+
+  padding: 22px 24px 26px;
+
+  border-top: 2px solid #777a68;
+}
+
+#power {
+  align-self: start;
+
+  border: 2px solid #4e5142;
+
+  padding: 13px 18px;
+
+  background: #6d715e;
+  color: #f1f0e3;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow: 2px 2px 0 #404238;
+}
+
+#power.on {
+  background: var(--orange);
+  color: #161711;
+}
+
+.mode > span,
+.volume > span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.mode-button {
+  border: 1px solid #55584a;
+
+  margin: 0 3px 3px 0;
+  padding: 7px 10px;
+
+  background: #999b84;
+  color: #22241d;
+
+  cursor: pointer;
+}
+
+.mode-button.active {
+  background: #565a49;
+  color: white;
+}
+
+.volume input {
+  width: 100%;
+
+  accent-color: #55584a;
+}
+
+.receiver-note {
+  margin: 0;
+
+  padding: 11px 24px 15px;
+
+  border-top: 1px solid #777a68;
+
+  color: #505345;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 13px;
+}
+
+.log {
+  align-self: start;
+
+  border: 1px solid #77796b;
+
+  background: #dedcc8;
+  color: #24251f;
+}
+
+.log h2 {
+  margin: 0;
+
+  padding: 10px 12px;
+
+  border-bottom: 2px solid #77796b;
+
+  background: #b9b69d;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 20px;
+}
+
+.log article {
+  padding: 12px;
+
+  border-bottom: 1px dotted #92907d;
+}
+
+.log article:nth-child(even) {
+  background: #d5d2bc;
+}
+
+.log time {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #5a3d25;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.log p {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.small-note,
+.contact-line {
+  margin: 0;
+
+  padding: 10px 12px;
+
+  color: #646254;
+
+  font-size: 13px;
+}
+
+.contact-line {
+  border-top: 1px solid #aaa792;
+}
+
+[data-contact] {
+  appearance: none;
+
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+  color: #0645ad;
+
+  text-decoration: underline;
+
+  cursor: pointer;
+}
+
+[data-contact]:hover {
+  color: #b00000;
+}
+
+.bottom-line {
+  display: flex;
+  justify-content: space-between;
+
+  width: min(1120px, 100%);
+  margin: 0 auto;
+
+  padding:
+    6px
+    18px
+    max(22px, env(safe-area-inset-bottom));
+
+  color: #777b6c;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 13px;
+}
+
+@media (max-width: 760px) {
+  main {
+    grid-template-columns: 1fr;
+
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  header {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .receiver {
+    border-left: 0;
+    border-right: 0;
+
+    box-shadow: none;
+  }
+
+  .display {
+    margin-left: 14px;
+    margin-right: 14px;
+
+    padding: 16px;
+  }
+
+  .frequency span {
+    font-size: clamp(48px, 18vw, 76px);
+  }
+
+  .dial-area {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+    gap: 18px;
+
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  #power {
+    width: fit-content;
+  }
+
+  .log {
+    margin: 12px 14px 0;
+  }
+
+  .bottom-line {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }

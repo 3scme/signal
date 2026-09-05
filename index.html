@@ -7,7 +7,9 @@
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
 
-  <title></title>
+  <meta name="theme-color" content="#25271f">
+
+  <title>SIGNAL</title>
 
   <link rel="stylesheet" href="./style.css">
   <script src="./script.js" defer></script>
@@ -15,5 +17,177 @@
 </head>
 
 <body>
+
+  <header>
+    <h1>SIGNAL</h1>
+    <p>shortwave receiver</p>
+  </header>
+
+  <main>
+
+    <section class="receiver">
+
+      <div class="receiver-top">
+        <span>GENERAL COVERAGE</span>
+        <span>2300–26100 kHz</span>
+      </div>
+
+      <div class="display">
+        <div class="frequency">
+          <span id="frequency">7100</span>
+          <small>kHz</small>
+        </div>
+
+        <div id="signal-name" class="signal-name">
+          —
+        </div>
+
+        <div class="meter">
+          <span>S</span>
+
+          <div class="meter-track">
+            <div id="meter-fill"></div>
+          </div>
+
+          <span>9+</span>
+        </div>
+      </div>
+
+      <div class="dial-area">
+        <input
+          id="tuner"
+          type="range"
+          min="2300"
+          max="26100"
+          step="1"
+          value="7100"
+          aria-label="Tuning frequency"
+        >
+
+        <div class="scale">
+          <span>2.3</span>
+          <span>5</span>
+          <span>10</span>
+          <span>15</span>
+          <span>20</span>
+          <span>26.1 MHz</span>
+        </div>
+      </div>
+
+      <div class="controls">
+
+        <button id="power" type="button">
+          POWER
+        </button>
+
+        <div class="mode">
+          <span>MODE</span>
+
+          <button
+            type="button"
+            class="mode-button active"
+            data-mode="AM"
+          >AM</button>
+
+          <button
+            type="button"
+            class="mode-button"
+            data-mode="USB"
+          >USB</button>
+
+          <button
+            type="button"
+            class="mode-button"
+            data-mode="LSB"
+          >LSB</button>
+        </div>
+
+        <label class="volume">
+          <span>VOLUME</span>
+          <input
+            id="volume"
+            type="range"
+            min="0"
+            max="100"
+            value="32"
+          >
+        </label>
+
+      </div>
+
+      <p class="receiver-note">
+        Tune slowly. Most of the dial is supposed to contain nothing.
+      </p>
+
+    </section>
+
+
+    <aside class="log">
+
+      <h2>RECEIVER LOG</h2>
+
+      <div id="log-entries">
+
+        <article>
+          <time>4625 kHz</time>
+          <p>
+            weak carrier, voice underneath noise
+          </p>
+        </article>
+
+        <article>
+          <time>6070 kHz</time>
+          <p>
+            music faded in and out for several minutes
+          </p>
+        </article>
+
+        <article>
+          <time>10000 kHz</time>
+          <p>
+            time signal
+          </p>
+        </article>
+
+        <article>
+          <time>14230 kHz</time>
+          <p>
+            two stations talking over each other
+          </p>
+        </article>
+
+        <article>
+          <time>18112 kHz</time>
+          <p>
+            repeating tones — probably data
+          </p>
+        </article>
+
+        <article>
+          <time>23317 kHz</time>
+          <p>
+            carrier only
+          </p>
+        </article>
+
+      </div>
+
+      <p class="small-note">
+        Times and reception vary.
+      </p>
+
+      <p class="contact-line">
+        <button type="button" data-contact>email</button>
+      </p>
+
+    </aside>
+
+  </main>
+
+  <div class="bottom-line">
+    <span id="mode-readout">AM</span>
+    <span id="power-readout">receiver off</span>
+  </div>
+
 </body>
 </html>
